@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Token Fetch</title>
+</head>
+<body>
+  <script>
+    function fncUUIDGen() {
+      const now = new Date();
+      const vYear = now.getFullYear().toString();
+      const vMonth = (now.getMonth() + 1).toString().padStart(2, '0'); // +1 since getMonth() is 0-based
+      const vDate = now.getDate().toString().padStart(2, '0');
+      const vHours = now.getHours().toString().padStart(2, '0');
+      const vMinutes = now.getMinutes().toString().padStart(2, '0');
+      const vSeconds = now.getSeconds().toString().padStart(2, '0');
+      const vMilliseconds = now.getMilliseconds().toString().padStart(3, '0');
+      const vRandom = Math.floor(Math.random() * 100 + 1).toString().padStart(2, '0');
+
+      return vYear + vMonth + vDate + vHours + vMinutes + vSeconds + vMilliseconds + vRandom;
+    }
+
+    const uuid = fncUUIDGen();
+    const xml = `<UpdateMobileRequest><uuid>${uuid}</uuid></UpdateMobileRequest>`;
+
+    fetch('https://minsert.truecorp.co.th/webapi/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: xml
+    })
+    .then(res => res.text())
+    .then(console.log)
+    .catch(err => console.error('Fetch error:', err));
+  </script>
+</body>
+</html>
